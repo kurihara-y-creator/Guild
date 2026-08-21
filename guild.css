@@ -1,0 +1,384 @@
+/*body 
+{
+    background: #000000;
+    color: white;
+    font-family: "DotGothic16", sans-serif;
+        
+}
+
+.rpg-window 
+{
+    border: 4px solid white;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.title-window 
+{
+    min-height: 100px;
+}
+
+.menu-window 
+{
+    min-height: 100px;
+}
+
+.table-window 
+{
+    min-height: 600px;
+}
+
+.message-window 
+{
+    min-height: 100px;
+}
+
+.rpg-btn 
+{   
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    font-size: 22px;
+    padding: 12px;
+}
+
+.rpg-btn:hover::before:not(.pagination)
+{
+    content: "▶";
+    margin-left: -22px;
+}
+
+.rpg-table td 
+{
+    border-color: rgb(0, 0, 0);
+}
+
+.table 
+{
+    --bs-table-bg: transparent;
+    --bs-table-color: white;
+}
+
+tbody tr td:first-child {/*trの最初にあるtdを指定するCSS　票の一番左側の列にあるセルに対する
+    position: relative;
+    padding-left: 10px;
+}
+
+.selected td:first-child::before { /*最初のtdの直前に▶を表示
+    content: "▶";
+    position: absolute;
+    left: 10px;
+}
+
+tbody tr:hover td:first-child::before { /*テーブルの票にマウスが乗った時▶表示
+    content: "▶";
+    position: absolute;
+    left: 10px;
+
+}
+
+
+table:has(tr.selected) tbody tr:not(.selected):hover td:first-child::before {
+    content: none;
+}
+
+
+/* 選択された行のセルすべてに薄い背景色を付ける 
+tbody tr.selected td {
+    background-color: rgba(0, 123, 255, 0.08);
+}
+
+.add-window {
+    display: none;
+    position: fixed;
+    width: 450px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: black;
+    z-index: 1000;
+}
+
+#deleteWindow,#updateWindow,#viewWindow{
+    position: fixed;
+    left: 200px;
+    top: 200px;
+    width: 320px;
+}
+
+.form-select,.form-control,#sortSelect{
+background-color: #000000;
+color: rgb(255, 255, 255);
+}
+
+#errorWindow {
+    position: fixed;
+    z-index: 9999;
+
+    display: none;
+}
+
+.pagination{
+            display: flex;
+            justify-content: center;
+}
+
+#sortSelect{
+    margin-bottom: 20px;
+}*/
+
+body {
+    background: #000000;
+    color: rgb(255, 255, 255);
+    font-family: "DotGothic16", sans-serif;
+}
+
+.rpg-window {
+    border: 4px solid white;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.title-window,
+.menu-window,
+.message-window {
+    min-height: 100px;
+}
+
+.table-window {
+    min-height: 600px;
+}
+
+.rpg-btn {
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    font-size: 22px;
+    padding: 12px;
+}
+
+.rpg-btn:hover::before {
+    content: "▶";
+    margin-left: -22px;
+}
+
+.add-window {
+    display: none;
+    position: fixed;
+    width: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: black;
+    z-index: 1000;
+}
+
+#deleteWindow,
+#updateWindow,
+#viewWindow {
+    position: fixed;
+    left: 200px;
+    top: 200px;
+    width: 320px;
+}
+
+.form-select,
+.form-control {
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+}
+
+#errorWindow {
+    position: fixed;
+    z-index: 9999;
+    display: none;
+}
+
+
+
+.gridjs-container 
+.gridjs-wrapper 
+.gridjs-table {
+    background-color: #000000;
+    color: #ffffff;
+   
+}
+
+.gridjs-tr,
+.gridjs-td {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px dashed #444444 !important;
+    font-family: "DotGothic16", sans-serif;
+    font-size: 18px;
+    padding: 12px 8px;
+    cursor: pointer;
+}
+
+/* ヘッダー(th)も黒背景に統一 */
+.gridjs-th {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-bottom: 2px solid #ffffff !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    font-family: "DotGothic16", sans-serif;
+    font-size: 18px;
+}
+
+.gridjs-th-content {
+    color: #ffffff !important;
+}
+
+/* ソート矢印の色調整 */
+button.gridjs-sort {
+    filter: invert(1);
+}
+
+/* テーブルセル */
+.gridjs-td {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px dashed #444444 !important;
+    font-family: "DotGothic16", sans-serif;
+    font-size: 18px;
+    padding: 12px 8px;
+    cursor: pointer;
+}
+
+/* マウスホバー */
+.gridjs-tr:hover .gridjs-td {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 選択行のハイライトとカーソル(▶)表示 */
+.gridjs-tr.selected .gridjs-td {
+    background-color: rgba(0, 123, 255, 0.25) !important;
+}
+
+.gridjs-tr.selected .gridjs-td:first-child::before {
+    content: "▶ ";
+    color: #ffffff;
+}
+
+
+
+/* フッター全体・ページネーション外枠の黒化 */
+.gridjs-footer,
+.gridjs-pagination {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-top: 2px solid #ffffff !important;
+    /* テーブルとの区切り線 */
+    box-shadow: none !important;
+}
+
+/* 「〇件中 〇〜〇件表示」などの件数テキスト */
+.gridjs-summary {
+    color: #ffffff !important;
+    font-family: "DotGothic16", sans-serif;
+    font-size: 16px;
+}
+
+/* 「← まえ」「つぎ →」などのボタン基本スタイル */
+.gridjs-pages button {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    font-family: "DotGothic16", sans-serif !important;
+    font-size: 16px !important;
+    margin: 0 4px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* ボタンホバー時（白黒反転） */
+.gridjs-pages button:hover:not(:disabled) {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* 現在開いているページ番号のボタン */
+.gridjs-pages button.gridjs-currentPage {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: bold;
+}
+
+.gridjs-pages button:disabled,
+.gridjs-pages button[disabled] {
+    background-color: #000000 !important;
+    color: #555555 !important;
+    /* 文字をグレーに */
+    border-color: #555555 !important;
+    /* 枠線をグレーに */
+    cursor: not-allowed;
+}
+
+.gridjs-pages button::before,
+.gridjs-pages button:hover::before {
+    content: none !important;
+}
+
+
+
+.gridjs-td:first-child {
+    position: relative !important;
+    padding-left: 32px !important;
+    /* ▶ が入るスペースを常に確保（これでID数値がずれません） */
+}
+
+.gridjs-td:first-child::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    /* セルの左端からの距離 */
+    top: 50%;
+    transform: translateY(-50%);
+    /* 垂直中央揃え */
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.gridjs-tr:hover .gridjs-td:first-child::before,
+.gridjs-tr.selected .gridjs-td:first-child::before {
+    content: "▶";
+}
+
+.gridjs-td {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px dashed #444444 !important;
+    font-family: "DotGothic16", sans-serif;
+    font-size: 18px;
+    padding: 12px 8px;
+    cursor: pointer;
+}
+
+
+.gridjs-tr:hover .gridjs-td {
+    background-color: #222222 !important;
+   
+}
+
+.gridjs-tr.selected .gridjs-td {
+    background-color: #002244 !important;
+    /* 選択時の青黒 */
+}
+
+.footer {
+    color: #ffffff ;
+    background-color: #000000 !important;
+}
