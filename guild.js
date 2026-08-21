@@ -521,6 +521,10 @@ const availableName = (name) => {
     showError("なまえ を にゅうりょくしてください");
     return false;
   }
+  if (Array.from(name).length > 16) {
+    showError("名前は１６文字以上で入力してください");
+    return false;
+  }
   return true;
 };
 
