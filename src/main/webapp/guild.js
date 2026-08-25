@@ -531,23 +531,13 @@ const availableName = (name) => {
 const isForbiddenJob = (race, gender, job) =>
   race === "3" && gender === "2" && job === "2";
 
-const updateJobOptions = (character) => {
-  const race = document.querySelector(`#${character}Race`).value;
-  const gender = document.querySelector(`#${character}Gender`).value;
-  const jobSelector = document.querySelector(`#${character}Job`);
-
-  Array.from(jobSelector.options).forEach((option) => {
-    option.disabled = isForbiddenJob(race, gender, option.value);
-  });
-};
-
 const availableCombination = (character) => {
   const race = document.querySelector(`#${character}Race`).value;
   const gender = document.querySelector(`#${character}Gender`).value;
   const job = document.querySelector(`#${character}Job`).value;
 
   if (isForbiddenJob(race, gender, job)) {
-    showError("おんなのドワーフはりゅうきしになれません");
+    showError("おんな の ドワーフ は りゅうきし には なれないぞ");
     return false;
   }
 
@@ -745,7 +735,6 @@ const openUpdateForm = () => {
   document.querySelector("#updateGender").value =
     genderMap[selectedMember.gender];
   document.querySelector("#updateJob").value = jobMap[selectedMember.job];
-  updateJobOptions("update");
   openWindow("#updateFormWindow");
 };
 
@@ -760,13 +749,11 @@ document.addEventListener("DOMContentLoaded", () => {
   viewList();
 
   ["add", "update"].forEach((character) => {
-    document
-      .querySelector(`#${character}Race`)
-      .addEventListener("change", () => updateJobOptions(character));
-    document
-      .querySelector(`#${character}Gender`)
-      .addEventListener("change", () => updateJobOptions(character));
-    updateJobOptions(character);
+    ["Race", "Gender", "Job"].forEach((field) => {
+      document
+        .querySelector(`#${character}${field}`)
+        .addEventListener("change", () => availableCombination(character));
+    });
   });
 
   click("#openAddWindow", openAddWindow);
