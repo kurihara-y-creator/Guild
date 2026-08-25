@@ -10,6 +10,7 @@ public class GuildMember
 
   public GuildMember(Integer id, String name, Job job, Gender gender, Race race)
   {
+    GuildMemberRule.validate(race, job);
     this.id = id;
     this.name = name;
     this.job = job;
