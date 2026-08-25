@@ -7,11 +7,11 @@ public class GuildMemberRule
 
   }
 
-  public static void validate(Race race, Job job)
+  public static void validate(Race race, Job job, Gender gender)
   {
-    if (race == Race.DWARF && job == Job.DRAGOON)
+    if (race == Race.DWARF && job == Job.DRAGOON && gender == Gender.FEMALE)
     {
-      throw new IllegalArgumentException("ドワーフは りゅうきし には なれないぞ");
+      throw new IllegalArgumentException("おんな ドワーフは りゅうきし には なれないぞ");
     }
   }
 }
