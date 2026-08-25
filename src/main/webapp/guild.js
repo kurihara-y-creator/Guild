@@ -486,9 +486,9 @@ const showError = (message) => {
 const closeError = () => closeWindow("#errorWindow");
 const clearAddForm = () => {
   document.querySelector("#addName").value = "";
-  document.querySelector("#addRace").selectedRace = 0;
-  document.querySelector("#addGender").selectedGender = 0;
-  document.querySelector("#addJob").selectedJob = 0;
+  document.querySelector("#addRace").selectedIndex = 0;
+  document.querySelector("#addGender").selectedIndex = 0;
+  document.querySelector("#addJob").selectedIndex = 0;
 };
 
 const refresh = () => {
@@ -521,6 +521,26 @@ const availableName = (name) => {
     showError("なまえ を にゅうりょくしてください");
     return false;
   }
+  if (Array.from(name).length > 16) {
+    showError("なまえ は １６じ いない で にゅうりょくしてください");
+    return false;
+  }
+  return true;
+};
+
+const isForbiddenJob = (race, gender, job) =>
+  race === "3" && gender === "2" && job === "2";
+
+const availableCombination = (character) => {
+  const race = document.querySelector(`#${character}Race`).value;
+  const gender = document.querySelector(`#${character}Gender`).value;
+  const job = document.querySelector(`#${character}Job`).value;
+
+  if (isForbiddenJob(race, gender, job)) {
+    showError("おんな の ドワーフ は りゅうきし には なれないぞ");
+    return false;
+  }
+
   return true;
 };
 
@@ -554,6 +574,7 @@ const initiateGrid = () => {
   document.querySelector("#gridWrapper").addEventListener("click", (event) => {
     //クリックイベント
     const tr = event.target.closest("tbody tr"); //クリック時一番近いtr
+    if (!tr) return;
     const firstTd = tr.querySelector("td"); //td取得
     const memberId = firstTd.innerText.trim(); //↑で取得したテキスト取得→idの前後切り取り整形
     const member = members.find((m) => m.id == memberId); //↑で取得したidと同じidのものを配列内から探す
@@ -628,6 +649,7 @@ const closeViewDetail = () => {
 const addMember = () => {
   const name = document.querySelector("#addName").value;
   if (!availableName(name)) return;
+  if (!availableCombination("add")) return;
 
   const formData = createFormData("add");
 
@@ -693,6 +715,7 @@ const closeUpdateWindow = () => {
 const updateMember = () => {
   const name = document.querySelector("#updateName").value;
   if (!availableName(name)) return;
+  if (!availableCombination("update")) return;
 
   const formData = createFormData("update");
   formData.append("id", selectedMember.id);
@@ -724,6 +747,14 @@ const closeUpdateForm = () => {
 document.addEventListener("DOMContentLoaded", () => {
   initiateGrid();
   viewList();
+
+  ["add", "update"].forEach((character) => {
+    ["Race", "Gender", "Job"].forEach((field) => {
+      document
+        .querySelector(`#${character}${field}`)
+        .addEventListener("change", () => availableCombination(character));
+    });
+  });
 
   click("#openAddWindow", openAddWindow);
   click("#closeButton", closeAddWindow);

@@ -1,0 +1,420 @@
+<!--<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link
+      href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+      rel="stylesheet" />
+
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+
+    <link rel="stylesheet" href="../css/guild.css" />
+
+    <title>ギルド管理</title>
+  </head>
+
+  <body>
+    <div class="container-fluid p-4">
+      <!--p-4 = padding 4--
+      <div class="rpg-window title-window mb-4">
+        <!--mb-4 = margin bottom 4--
+        <h1 class="text-center mb-0">冒険者ギルド</h1>
+      </div>
+
+      <div class="row g-4">
+        <!--横一列　g-4=列のgapの大きさが4--
+        <div class="col-lg-3">
+          <!--Bootstrapは横を12分割する。lg-3=PCサイズ以上なら3列。3/12で、左側にコマンド入力のwindowができる--
+          <div class="rpg-window menu-window">
+            <h3>なにをしますか？</h3>
+
+            <button id="openViewWindow" class="rpg-btn">メンバーをみる</button>
+            <button id="openAddWindow" class="rpg-btn">なかまをふやす</button>
+            <button id="openUpdateWindow" class="rpg-btn">へんこう</button>
+            <button id="deleteButton" class="rpg-btn">なかまとわかれる</button>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <!--残りの右側9列--
+
+          <div class="rpg-window table-window">
+            <h3 class="text-center">なかまたち</h3>
+            <div class="sortArea">
+              <label>ならびかえ</label>
+              <select id="sortSelect">
+                <option value="id">ID</option>
+                <option value="name">なまえ</option>
+                <option value="race">しゅぞく</option>
+                <option value="job">しょくぎょう</option>
+              </select>
+            </div>
+
+            <table class="table rpg-table">
+              <thead>
+                <tr>
+                  <th class="cursor"></th>
+                  <th>ばんごう</th>
+                  <th>なまえ</th>
+                  <th>しゅぞく</th>
+                  <th>せいべつ</th>
+                  <th>しょくぎょう</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <!-- データが入っている --
+              </tbody>
+            </table>
+            <div class="pagination">
+              <button id="prevButton" class="rpg-btn">← まえ</button>
+
+              <span id="pageInfo"></span>
+
+              <button id="nextButton" class="rpg-btn">つぎ →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="viewWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">メンバーをみる</h3>
+        <p id="viewMessage">どの なかまを みますか？</p>
+        <button id="viewCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="viewDetailWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">メンバーしょうさい</h3>
+        <p>なまえ：<span id="viewName"></span></p>
+        <p>しゅぞく：<span id="viewRace"></span></p>
+        <p>せいべつ：<span id="viewGender"></span></p>
+        <p>しょくぎょう：<span id="viewJob"></span></p>
+        <button id="viewCloseButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="addWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">なかまをふやす</h3>
+
+        <div class="mb-3">
+          <label>なまえ</label>
+          <input id="addName" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label>しゅぞく</label>
+          <select id="addRace" class="form-select">
+            <option value="1">にんげん</option>
+            <option value="2">エルフ</option>
+            <option value="3">ドワーフ</option>
+            <option value="4">ノーム</option>
+            <option value="5">ホビット</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>せいべつ</label>
+          <select id="addGender" class="form-select">
+            <option value="1">おとこ</option>
+            <option value="2">おんな</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>しょくぎょう</label>
+          <select id="addJob" class="form-select">
+            <option value="1">せんし</option>
+            <option value="2">りゅうきし</option>
+            <option value="3">とうぞく</option>
+            <option value="4">そうりょ</option>
+            <option value="5">まじゅつし</option>
+            <option value="6">さむらい</option>
+            <option value="7">にんじゃ</option>
+            <option value="8">ぎんゆうしじん</option>
+          </select>
+        </div>
+        <button id="addButton" class="rpg-btn">けってい</button>
+        <button id="closeButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="errorWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center"></h3>
+
+        <p id="errorMessage"></p>
+
+        <button id="errorOkButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="updateWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">へんこう</h3>
+        <p id="updateMessage">どの なかまを へんこうしますか？</p>
+        <button id="updateCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="updateFormWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">へんこう</h3>
+        <div class="mb-3">
+          <label>なまえ</label>
+          <input id="updateName" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label>しゅぞく</label>
+          <select id="updateRace" class="form-select">
+            <option value="1">にんげん</option>
+            <option value="2">エルフ</option>
+            <option value="3">ドワーフ</option>
+            <option value="4">ノーム</option>
+            <option value="5">ホビット</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>せいべつ</label>
+          <select id="updateGender" class="form-select">
+            <option value="1">おとこ</option>
+            <option value="2">おんな</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>しょくぎょう</label>
+          <select id="updateJob" class="form-select">
+            <option value="1">せんし</option>
+            <option value="2">りゅうきし</option>
+            <option value="3">とうぞく</option>
+            <option value="4">そうりょ</option>
+            <option value="5">まじゅつし</option>
+            <option value="6">さむらい</option>
+            <option value="7">にんじゃ</option>
+            <option value="8">ぎんゆうしじん</option>
+          </select>
+        </div>
+
+        <button id="updateButton" class="rpg-btn">けってい</button>
+        <button id="updateFormCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="errorWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center"></h3>
+
+        <p id="errorMessage"></p>
+
+        <button id="errorOkButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="deleteWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">なかまとわかれる</h3>
+
+        <p id="deleteMessage">どの なかまと わかれますか？</p>
+
+        <button id="deleteCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="deleteConfirmWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">なかまとわかれる</h3>
+
+        <p id="deleteConfirmMessage"></p>
+
+        <button id="deleteConfirmButton" class="rpg-btn">はい</button>
+
+        <button id="deleteNoButton" class="rpg-btn">いいえ</button>
+      </div>
+
+      <div class="rpg-window message-window mt-4">
+        <p class="mb-0">▶ ここでは なかまをふやしたり へんこう ができるぞ。</p>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/guild.js"></script>
+  </body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link
+      href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+      rel="stylesheet" />
+
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+
+    <link rel="stylesheet" href="../css/guild.css" />
+
+    <title>ギルド管理</title>
+  </head>
+
+  <body>
+    <div class="container-fluid p-4">
+      <div class="rpg-window title-window mb-4">
+        <h1 class="text-center mb-0">冒険者ギルド</h1>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-3">
+          <div class="rpg-window menu-window">
+            <h3>なにをしますか？</h3>
+            <button id="openViewWindow" class="rpg-btn">メンバーをみる</button>
+            <button id="openAddWindow" class="rpg-btn">なかまをふやす</button>
+            <button id="openUpdateWindow" class="rpg-btn">へんこう</button>
+            <button id="deleteButton" class="rpg-btn">なかまとわかれる</button>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div class="rpg-window table-window">
+            <h3 class="text-center">なかまたち</h3>
+            <!-- Grid.jsのレンダリング領域 -->
+            <div id="gridWrapper"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- モード指定・詳細表示モーダル群 -->
+      <div id="viewWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">メンバーをみる</h3>
+        <p id="viewMessage">どの なかまを みますか？</p>
+        <button id="viewCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="viewDetailWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">メンバーしょうさい</h3>
+        <p>なまえ：<span id="viewName"></span></p>
+        <p>しゅぞく：<span id="viewRace"></span></p>
+        <p>せいべつ：<span id="viewGender"></span></p>
+        <p>しょくぎょう：<span id="viewJob"></span></p>
+        <button id="viewCloseButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="addWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">なかまをふやす</h3>
+        <div class="mb-3">
+          <label>なまえ</label>
+          <input id="addName" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label>しゅぞく</label>
+          <select id="addRace" class="form-select">
+            <option value="1">にんげん</option>
+            <option value="2">エルフ</option>
+            <option value="3">ドワーフ</option>
+            <option value="4">ノーム</option>
+            <option value="5">ホビット</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>せいべつ</label>
+          <select id="addGender" class="form-select">
+            <option value="1">おとこ</option>
+            <option value="2">おんな</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>しょくぎょう</label>
+          <select id="addJob" class="form-select">
+            <option value="1">せんし</option>
+            <option value="2">りゅうきし</option>
+            <option value="3">とうぞく</option>
+            <option value="4">そうりょ</option>
+            <option value="5">まじゅつし</option>
+            <option value="6">さむらい</option>
+            <option value="7">にんじゃ</option>
+            <option value="8">ぎんゆうしじん</option>
+          </select>
+        </div>
+        <button id="addButton" class="rpg-btn">けってい</button>
+        <button id="closeButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="updateWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">へんこう</h3>
+        <p id="updateMessage">どの なかまを へんこうしますか？</p>
+        <button id="updateCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="updateFormWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">へんこう</h3>
+        <div class="mb-3">
+          <label>なまえ</label>
+          <input id="updateName" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label>しゅぞく</label>
+          <select id="updateRace" class="form-select">
+            <option value="1">にんげん</option>
+            <option value="2">エルフ</option>
+            <option value="3">ドワーフ</option>
+            <option value="4">ノーム</option>
+            <option value="5">ホビット</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>せいべつ</label>
+          <select id="updateGender" class="form-select">
+            <option value="1">おとこ</option>
+            <option value="2">おんな</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>しょくぎょう</label>
+          <select id="updateJob" class="form-select">
+            <option value="1">せんし</option>
+            <option value="2">りゅうきし</option>
+            <option value="3">とうぞく</option>
+            <option value="4">そうりょ</option>
+            <option value="5">まじゅつし</option>
+            <option value="6">さむらい</option>
+            <option value="7">にんじゃ</option>
+            <option value="8">ぎんゆうしじん</option>
+          </select>
+        </div>
+        <button id="updateButton" class="rpg-btn">けってい</button>
+        <button id="updateFormCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="deleteWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">なかまとわかれる</h3>
+        <p id="deleteMessage">どの なかまと わかれますか？</p>
+        <button id="deleteCancelButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div id="deleteConfirmWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">なかまとわかれる</h3>
+        <p id="deleteConfirmMessage"></p>
+        <button id="deleteConfirmButton" class="rpg-btn">はい</button>
+        <button id="deleteNoButton" class="rpg-btn">いいえ</button>
+      </div>
+
+      <div id="errorWindow" class="rpg-window mt-4 add-window">
+        <h3 class="text-center">エラー</h3>
+        <p id="errorMessage"></p>
+        <button id="errorOkButton" class="rpg-btn">もどる</button>
+      </div>
+
+      <div class="rpg-window message-window mt-4">
+        <p class="mb-0">▶ ここでは なかまをふやしたり へんこう ができるぞ。</p>
+      </div>
+    </div>
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container text-center">
+        <span class="text-muted">© 2026 冒険者ギルド管理システム</span>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/guild.js"></script>
+  </body>
+</html>
